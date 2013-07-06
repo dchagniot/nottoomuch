@@ -1,0 +1,30 @@
+
+DRAFT, all steps not verified ATM...
+
+git branch -av --no-abbrev > repo-status-bf
+git fetch --all -p
+git branch -av --no-abbrev > repo-status-af
+# abort if dogfood-new exists.
+git checkout -b dogfood-new origin/dogfood
+git commit ... && git push -u origin HEAD:dogfood-new
+while hacking
+  git commit --amend -C HEAD files && git push --force
+git checkout master
+git cherry-pick dogfood-new
+# check results
+git push
+git checkout dogfood
+git rebase master
+git push
+git branch -D dogfood
+git push origin :dogfood-new
+
+write a script for the following (if not also for the above)
+
+treeish=`git cat-file commit dogfood | awk '$1 == "tree" { print $2; exit 0; }'`
+parent_commit=`git log -1 --pretty=%H origin/df-yymm-1234567`
+
+new_commit=`git commit-tree $treeish -p $parent_commit` # fixme smart message
+git log --pretty=raw --name-status $new_commit
+git diff $new_commit dogfood
+git push origin new_commit:df-yymm-1234567
