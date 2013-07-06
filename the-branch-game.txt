@@ -16,12 +16,12 @@ git push
 git checkout dogfood
 git rebase master
 git push
-git branch -D dogfood
+git branch -D dogfood-new
 git push origin :dogfood-new
 
 write a script for the following (if not also for the above)
 
-treeish=`git cat-file commit dogfood | awk '$1 == "tree" { print $2; exit 0; }'`
+treeish=`git log -1 --pretty=%T dogfood`
 parent_commit=`git log -1 --pretty=%H origin/df-yymm-1234567`
 
 new_commit=`git commit-tree $treeish -p $parent_commit` # fixme smart message
