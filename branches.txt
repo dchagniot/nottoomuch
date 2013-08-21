@@ -33,3 +33,5 @@ ps: guess how many
 
 lines i've executed in ‛dogfood’ branch so far (HEAD commit contained
 changes to `README.rst` only).
+
+2013-08-21 update:  git commit a -C HEAD --amend && git push -f
