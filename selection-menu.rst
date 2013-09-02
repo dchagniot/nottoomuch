@@ -29,7 +29,7 @@ feature use selection menu:
   (require 'selection-menu)
   (setq notmuch-address-selection-function
         (lambda (prompt collection initial-input)
-          (selection-menu "Send To:" collection t)))
+          (selection-menu "Send To:" (cons initial-input collection) t)))
 
 
 Example Picture
