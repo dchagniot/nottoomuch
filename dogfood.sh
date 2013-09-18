@@ -2,25 +2,26 @@
 # -*- mode: shell-script; sh-basic-offset: 8; tab-width: 8 -*-
 #
 # Created: Sat 06 Jul 2013 20:08:27 EEST too
-# Last modified: Fri 19 Jul 2013 22:25:17 EEST too
+# Last modified: Wed 18 Sep 2013 19:03:30 EEST too
 
 set -eu
 #set -x # or enter /bin/sh -x ... on command line.
 
-#case ~ in '~') exec >&2
-#	echo "Shell '/bin/sh' lacks some required (posix) functionality"
-#	echo "Try 'bash $0 $*' or 'ksh $0 $*' to fulfill these requirements"
+#case ~ in '~') exec >&2; echo
+#	echo "Shell '/bin/sh' lacks some required (posix?) functionality."
+#	echo "Try 'ksh $0${1+ $*}', 'bash $0${1+ $*}'"
+#	echo " or 'zsh $0${1+ $*}' instead."; echo
 #	exit 1
 #esac
 
 # LANG=C LC_ALL=C; export LANG LC_ALL
 PATH='/sbin:/usr/sbin:/bin:/usr/bin'; export PATH
 
-#warn () { for l in "$@"; do echo "$l"; done; } >&2
 warn () { echo "$@"; } >&2
 die () { exec >&2; echo "$@"; exit 1; }
 
 case ${BASH_VERSION-} in *.*) shopt -s xpg_echo; esac
+case ${ZSH_VERSION-} in *.*) setopt shwordsplit; esac
 
 x () { echo + "$@" >&2; "$@"; }
 x_exec () { echo + "$@" >&2; exec "$@"; }
